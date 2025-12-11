@@ -58,7 +58,7 @@ function onDrop(event: DragEvent) {
       </div>
     </header>
 
-    <div class="custom-scrollbar grid auto-rows-min max-h-[70vh] gap-3 overflow-y-auto">
+    <div class="custom-scrollbar grid auto-rows-min max-h-[85svh] gap-3 overflow-y-auto">
       <ComponentCardItem
         v-for="card in cards"
         :key="card.id"

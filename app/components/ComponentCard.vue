@@ -19,7 +19,7 @@ function onDragStart(event: DragEvent) {
 
 <template>
   <article
-    class="bg-base-1 border-base-6 cursor-grab select-none border card-base p-4"
+    class="bg-gray-11 border border-solid border-pureWhite cursor-grab select-none card-base p-4"
     draggable="true"
     @dragstart="onDragStart"
     @click="emit('select', card.id)"
