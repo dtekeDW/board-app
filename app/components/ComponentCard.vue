@@ -8,37 +8,45 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   (e: 'select', id: string): void
-  (e: 'dragStart', payload: { id: string, status: ComponentStatus }): void
+  (e: 'dragStart', payload: { id: string; status: ComponentStatus }): void
 }>()
 
 function onDragStart(event: DragEvent) {
   event.dataTransfer?.setData('text/plain', props.card.id)
+  if (event.dataTransfer) {
+    event.dataTransfer.effectAllowed = 'move'
+    const target = event.currentTarget as HTMLElement | null
+    if (target) {
+      const offsetY = Math.min(24, target.clientHeight / 2)
+      event.dataTransfer.setDragImage(target, target.clientWidth / 2, offsetY)
+    }
+  }
   emit('dragStart', { id: props.card.id, status: props.card.status })
 }
 </script>
 
 <template>
   <article
-    class="bg-gray-11 border border-solid border-pureWhite cursor-grab select-none card-base p-4"
+    class="card-base w-full cursor-grab select-none border border-solid border-pureWhite p-3"
     draggable="true"
     @dragstart="onDragStart"
     @click="emit('select', card.id)"
   >
     <div class="flex items-start justify-between gap-3">
       <div>
-        <p class="text-base-12 text-sm font-semibold">
+        <p class="text-sm font-semibold text-base-12">
           {{ card.name }}
         </p>
-        <p class="text-base-9 text-xs">
+        <p class="text-xs text-base-10">
           {{ card.category }}
         </p>
       </div>
-      <span class="bg-base-3 text-base-11 rounded-full px-2 py-1 text-[11px] font-semibold tracking-wide uppercase">
+      <span class="rounded-full bg-base-3 px-2 py-1 text-[11px] font-semibold uppercase tracking-wide text-base-11">
         {{ card.status }}
       </span>
     </div>
 
-    <div class="text-base-10 mt-3 text-xs space-y-1">
+    <div class="mt-3 space-y-1 text-xs text-base-10">
       <p class="line-clamp-1">
         Storybook: {{ card.storybookPath }}
       </p>

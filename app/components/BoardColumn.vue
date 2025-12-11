@@ -40,7 +40,7 @@ function onDrop(event: DragEvent) {
 
 <template>
   <section
-    class="h-full min-h-[440px] min-w-[360px] flex flex-col gap-3 column-surface p-4 ring-offset-2 transition"
+    class="h-full min-h-[440px] min-w-[300px] flex flex-col gap-3 column-surface p-4 ring-offset-2 transition flex-shrink-0"
     :class="isOver ? 'ring-2 ring-primary-9 bg-base-1 shadow-md' : ''"
     @dragover="onDragOver"
     @dragenter="onDragEnter"
@@ -58,7 +58,7 @@ function onDrop(event: DragEvent) {
       </div>
     </header>
 
-    <div class="custom-scrollbar grid auto-rows-min max-h-[85svh] gap-3 overflow-y-auto">
+     <div class="custom-scrollbar grid auto-rows-min max-h-[80vh] gap-3 overflow-y-auto">
       <ComponentCardItem
         v-for="card in cards"
         :key="card.id"
