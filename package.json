@@ -7,16 +7,19 @@
     "dev": "nuxt dev",
     "build": "nuxt build",
     "preview": "nuxt preview",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "dependencies": {
+    "@unocss/nuxt": "^0.58.9",
     "nuxt": "^4.0.0",
-    "vue": "^3.4.21",
-    "@unocss/nuxt": "^0.58.9"
+    "vue": "^3.4.21"
   },
   "devDependencies": {
+    "@antfu/eslint-config": "^6.6.1",
     "@types/node": "^22.9.0",
-    "eslint": "^9.14.0",
+    "@unocss/eslint-plugin": "^66.5.10",
+    "eslint": "^9.39.1",
     "typescript": "^5.4.5"
   },
   "engines": {
