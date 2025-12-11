@@ -4,7 +4,7 @@ export type ComponentArea = (typeof componentAreas)[number]
 export const componentStatuses = ['toProcess', 'inProgress', 'inReview', 'done'] as const
 export type ComponentStatus = (typeof componentStatuses)[number]
 
-export type ComponentCard = {
+export interface ComponentCard {
   id: string
   name: string
   category: string
@@ -14,10 +14,9 @@ export type ComponentCard = {
   status: ComponentStatus
 }
 
-export type ComponentInventoryItem = {
+export interface ComponentInventoryItem {
   name: string
   category: string
   storybookPath: string
   filePath: string
 }
-

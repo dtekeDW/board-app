@@ -6,17 +6,16 @@ const props = defineProps<{
 }>()
 
 const badgeTone: Record<ComponentArea, string> = {
-  MOT: 'bg-blue-100 text-blue-700 border-blue-200',
-  TCO: 'bg-emerald-100 text-emerald-700 border-emerald-200',
-  beOne: 'bg-amber-100 text-amber-800 border-amber-200',
-  Jobs: 'bg-fuchsia-100 text-fuchsia-700 border-fuchsia-200',
-  Corporate: 'bg-slate-100 text-slate-700 border-slate-200'
+  MOT: 'bg-amber-4 text-amber-12 border-amber-8',
+  TCO: 'bg-green-4 text-green-12 border-green-8',
+  beOne: 'bg-crimson-4 text-crimson-12 border-crimson-8',
+  Jobs: 'bg-blue-4 text-blue-12 border-blue-8',
+  Corporate: 'bg-base-3 text-base-12 border-base-7',
 }
 </script>
 
 <template>
-  <span class="pill border" :class="badgeTone[props.area]">
+  <span class="border-base-6 pill border" :class="badgeTone[props.area]">
     {{ props.area }}
   </span>
 </template>
-

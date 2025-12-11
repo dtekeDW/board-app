@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import type { ComponentCard, ComponentStatus } from '~/types/component'
+import { ref } from 'vue'
 import ComponentCardItem from '~/components/ComponentCard.vue'
 
 const props = defineProps<{
@@ -10,37 +10,38 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (e: 'dropCard', payload: { id: string; status: ComponentStatus }): void
+  (e: 'dropCard', payload: { id: string, status: ComponentStatus }): void
   (e: 'selectCard', id: string): void
 }>()
 
 const isOver = ref(false)
 
-const onDragOver = (event: DragEvent) => {
+function onDragOver(event: DragEvent) {
   event.preventDefault()
 }
 
-const onDragEnter = (event: DragEvent) => {
+function onDragEnter(event: DragEvent) {
   event.preventDefault()
   isOver.value = true
 }
 
-const onDragLeave = () => {
+function onDragLeave() {
   isOver.value = false
 }
 
-const onDrop = (event: DragEvent) => {
+function onDrop(event: DragEvent) {
   event.preventDefault()
   isOver.value = false
   const id = event.dataTransfer?.getData('text/plain')
-  if (id) emit('dropCard', { id, status: props.status })
+  if (id)
+    emit('dropCard', { id, status: props.status })
 }
 </script>
 
 <template>
   <section
-    class="column-surface flex h-full min-h-[440px] min-w-[360px] flex-col gap-3 p-4 transition ring-offset-2"
-    :class="isOver ? 'ring-2 ring-indigo-400 bg-white' : ''"
+    class="h-full min-h-[440px] min-w-[360px] flex flex-col gap-3 column-surface p-4 ring-offset-2 transition"
+    :class="isOver ? 'ring-2 ring-primary-9 bg-base-1 shadow-md' : ''"
     @dragover="onDragOver"
     @dragenter="onDragEnter"
     @dragleave="onDragLeave"
@@ -48,16 +49,16 @@ const onDrop = (event: DragEvent) => {
   >
     <header class="flex items-center justify-between gap-2">
       <div>
-        <h2 class="text-sm font-semibold text-slate-900">
+        <h2 class="text-base-12 text-sm font-semibold">
           {{ title }}
         </h2>
-        <p class="text-xs text-slate-500">
+        <p class="text-base-10 text-xs">
           {{ cards.length }} items
         </p>
       </div>
     </header>
 
-    <div class="custom-scrollbar grid max-h-[70vh] auto-rows-min gap-3 overflow-y-auto">
+    <div class="custom-scrollbar grid auto-rows-min max-h-[70vh] gap-3 overflow-y-auto">
       <ComponentCardItem
         v-for="card in cards"
         :key="card.id"
@@ -67,4 +68,3 @@ const onDrop = (event: DragEvent) => {
     </div>
   </section>
 </template>
-

@@ -1,5 +1,5 @@
 export default defineAppConfig({
   ui: {
-    name: 'Component Sprint Board'
-  }
+    name: 'Component Sprint Board',
+  },
 })

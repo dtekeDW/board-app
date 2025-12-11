@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const props = defineProps<{
   sprintName: string
-  sprintOptions: { id: string; name: string }[]
+  sprintOptions: { id: string, name: string }[]
   modelValue: string
 }>()
 
@@ -13,20 +13,20 @@ const emit = defineEmits<{
 <template>
   <header class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
     <div>
-      <p class="text-xs uppercase tracking-wide text-slate-500">
+      <p class="text-base-10 text-xs tracking-wide uppercase">
         Component Sprint Board
       </p>
-      <h1 class="text-2xl font-semibold text-slate-900">
+      <h1 class="text-base-12 text-2xl font-semibold">
         {{ sprintName }}
       </h1>
     </div>
 
     <div class="flex flex-wrap items-center gap-2">
-      <label class="text-sm text-slate-600">
+      <label class="text-base-11 text-sm">
         Sprint
       </label>
       <select
-        class="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 shadow-sm focus:border-indigo-400 focus:outline-none"
+        class="border-base-6 bg-base-1 text-base-12 focus:border-primary-9 border rounded-lg px-3 py-2 text-sm shadow-sm focus:outline-none"
         :value="modelValue"
         @change="emit('update:modelValue', ($event.target as HTMLSelectElement).value)"
       >
@@ -37,4 +37,3 @@ const emit = defineEmits<{
     </div>
   </header>
 </template>
-
