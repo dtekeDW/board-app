@@ -37,37 +37,34 @@ function onDragEnd() {
 
 <template>
   <article
-    class="card-base w-full bg-pureWhite/15 cursor-grab select-none hover:bg-crimson-11 border border-solid border-pureWhite p-3 transition-colors"
+    class="card-base w-full max-w-full overflow-hidden cursor-grab select-none border border-base-6 bg-base-2 p-1.5 transition-colors hover:bg-crimson-11 break-words"
     :class="isDragging ? 'bg-crimson-10 text-base-1' : 'bg-base-2'"
     draggable="true"
     @dragstart="onDragStart"
     @dragend="onDragEnd"
     @click="emit('select', card.id)"
   >
-    <div class="flex items-start justify-between gap-3">
-      <div>
-        <p class="text-sm font-semibold text-base-12">
+    <div class="flex items-start justify-between gap-1.5">
+      <div class="min-w-0">
+        <p class="text-[13px] font-semibold leading-tight text-base-12 break-words">
           {{ card.name }}
         </p>
-        <p class="text-xs text-base-10">
+        <p class="text-[10px] leading-snug text-base-10 truncate">
           {{ card.category }}
         </p>
       </div>
-      <span class="rounded-full bg-base-3 px-2 py-1 text-[11px] font-semibold uppercase tracking-wide text-base-11">
+      <span class="shrink-0 rounded-full bg-base-3 px-1.5 py-0.5 text-[9.5px] font-semibold uppercase tracking-wide text-base-11">
         {{ card.status }}
       </span>
     </div>
 
-    <div class="mt-3 space-y-1 text-xs text-base-10">
-      <p class="line-clamp-1">
+    <div class="mt-1 text-[10.5px] leading-snug text-base-10 whitespace-normal">
+      <p class="break-words">
         Storybook: {{ card.storybookPath }}
-      </p>
-      <p class="line-clamp-1">
-        File: {{ card.filePath }}
       </p>
     </div>
 
-    <div v-if="card.areas.length" class="mt-4 flex flex-wrap gap-2">
+    <div v-if="card.areas.length" class="mt-2 flex flex-wrap gap-1">
       <BadgePill v-for="area in card.areas" :key="area" :area="area" />
     </div>
   </article>

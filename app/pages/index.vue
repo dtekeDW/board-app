@@ -36,7 +36,7 @@ const sprintId = computed(() => sprint.value?.id ?? '')
       @update:model-value="handleSprintChange"
     />
 
-    <section class="flex gap-4 pb-2">
+    <section class="grid gap-3 pb-2 grid-cols-[repeat(auto-fit,minmax(220px,1fr))] items-start">
       <BoardColumn
         v-for="column in columns || []"
         :key="column.key"
