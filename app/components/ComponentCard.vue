@@ -37,7 +37,7 @@ function onDragEnd() {
 
 <template>
   <article
-    class="card-base w-full cursor-grab select-none border border-base-6 p-3 transition-colors"
+    class="card-base w-full bg-pureWhite/15 cursor-grab select-none hover:bg-crimson-11 border border-solid border-pureWhite p-3 transition-colors"
     :class="isDragging ? 'bg-crimson-10 text-base-1' : 'bg-base-2'"
     draggable="true"
     @dragstart="onDragStart"

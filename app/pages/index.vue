@@ -4,9 +4,10 @@ import BoardColumn from '~/components/BoardColumn.vue'
 import CardDetailDrawer from '~/components/CardDetailDrawer.vue'
 import SprintHeader from '~/components/SprintHeader.vue'
 import { useComponentBoard } from '~/composables/useComponentBoard'
+import type { ComponentStatus } from '~/types/component'
 
 const { sprint, sprintOptions, columns, moveCard, updateAreas, selectedCard, selectCard } = useComponentBoard()
-const dragging = ref<{ id: string; status: string } | null>(null)
+const dragging = ref<{ id: string; status: ComponentStatus } | null>(null)
 
 function handleSprintChange(value: string) {
   const next = sprintOptions.find(option => option.id === value)
@@ -14,7 +15,7 @@ function handleSprintChange(value: string) {
     sprint.value = next
 }
 
-function handleDragStart(payload: { id: string; status: string }) {
+function handleDragStart(payload: { id: string; status: ComponentStatus }) {
   dragging.value = payload
 }
 
@@ -35,14 +36,14 @@ const sprintId = computed(() => sprint.value?.id ?? '')
       @update:model-value="handleSprintChange"
     />
 
-    <section class="flex gap-4 overflow-x-auto pb-2">
+    <section class="flex gap-4 pb-2">
       <BoardColumn
         v-for="column in columns || []"
         :key="column.key"
         :title="column.title"
         :status="column.key"
         :cards="column.cards"
-        :dragging-status="dragging?.status ?? null"
+        :dragging-status="dragging?.status || null"
         @drop-card="moveCard($event.id, $event.status)"
         @drag-start="handleDragStart"
         @drag-end="handleDragEnd"
