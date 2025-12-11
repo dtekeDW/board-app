@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { ComponentCard, ComponentStatus } from '~/types/component'
+import { ref } from 'vue'
 import BadgePill from '~/components/BadgePill.vue'
 
 const props = defineProps<{
@@ -9,7 +10,10 @@ const props = defineProps<{
 const emit = defineEmits<{
   (e: 'select', id: string): void
   (e: 'dragStart', payload: { id: string; status: ComponentStatus }): void
+  (e: 'dragEnd', payload: { id: string; status: ComponentStatus }): void
 }>()
+
+const isDragging = ref(false)
 
 function onDragStart(event: DragEvent) {
   event.dataTransfer?.setData('text/plain', props.card.id)
@@ -21,15 +25,23 @@ function onDragStart(event: DragEvent) {
       event.dataTransfer.setDragImage(target, target.clientWidth / 2, offsetY)
     }
   }
+  isDragging.value = true
   emit('dragStart', { id: props.card.id, status: props.card.status })
+}
+
+function onDragEnd() {
+  isDragging.value = false
+  emit('dragEnd', { id: props.card.id, status: props.card.status })
 }
 </script>
 
 <template>
   <article
-    class="card-base w-full cursor-grab select-none border border-solid border-pureWhite p-3"
+    class="card-base w-full cursor-grab select-none border border-base-6 p-3 transition-colors"
+    :class="isDragging ? 'bg-crimson-10 text-base-1' : 'bg-base-2'"
     draggable="true"
     @dragstart="onDragStart"
+    @dragend="onDragEnd"
     @click="emit('select', card.id)"
   >
     <div class="flex items-start justify-between gap-3">

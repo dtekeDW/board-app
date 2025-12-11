@@ -1,16 +1,25 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import BoardColumn from '~/components/BoardColumn.vue'
 import CardDetailDrawer from '~/components/CardDetailDrawer.vue'
 import SprintHeader from '~/components/SprintHeader.vue'
 import { useComponentBoard } from '~/composables/useComponentBoard'
 
 const { sprint, sprintOptions, columns, moveCard, updateAreas, selectedCard, selectCard } = useComponentBoard()
+const dragging = ref<{ id: string; status: string } | null>(null)
 
 function handleSprintChange(value: string) {
   const next = sprintOptions.find(option => option.id === value)
   if (next)
     sprint.value = next
+}
+
+function handleDragStart(payload: { id: string; status: string }) {
+  dragging.value = payload
+}
+
+function handleDragEnd() {
+  dragging.value = null
 }
 
 const sprintName = computed(() => sprint.value?.name ?? 'Sprint')
@@ -33,7 +42,10 @@ const sprintId = computed(() => sprint.value?.id ?? '')
         :title="column.title"
         :status="column.key"
         :cards="column.cards"
+        :dragging-status="dragging?.status ?? null"
         @drop-card="moveCard($event.id, $event.status)"
+        @drag-start="handleDragStart"
+        @drag-end="handleDragEnd"
         @select-card="selectCard"
       />
     </section>

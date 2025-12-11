@@ -7,11 +7,14 @@ const props = defineProps<{
   title: string
   status: ComponentStatus
   cards: ComponentCard[]
+  draggingStatus?: ComponentStatus | null
 }>()
 
 const emit = defineEmits<{
-  (e: 'dropCard', payload: { id: string, status: ComponentStatus }): void
+  (e: 'dropCard', payload: { id: string; status: ComponentStatus }): void
   (e: 'selectCard', id: string): void
+  (e: 'dragStart', payload: { id: string; status: ComponentStatus }): void
+  (e: 'dragEnd', payload: { id: string; status: ComponentStatus }): void
 }>()
 
 const isOver = ref(false)
@@ -40,8 +43,14 @@ function onDrop(event: DragEvent) {
 
 <template>
   <section
-    class="h-full min-h-[440px] min-w-[300px] flex flex-col gap-3 column-surface p-4 ring-offset-2 transition flex-shrink-0"
-    :class="isOver ? 'ring-2 ring-primary-9 bg-base-1 shadow-md' : ''"
+    class="h-full min-h-[440px] min-w-[300px] flex flex-col gap-3 column-surface p-4 ring-offset-2 ring-offset-pureBlack transition flex-shrink-0"
+    :class="[
+      isOver
+        ? 'ring-2 ring-mint-10 bg-base-1 shadow-blue-9 shadow-md'
+        : props.draggingStatus === props.status
+          ? 'ring-2 ring-crimson-10'
+          : ''
+    ]"
     @dragover="onDragOver"
     @dragenter="onDragEnter"
     @dragleave="onDragLeave"
@@ -58,11 +67,13 @@ function onDrop(event: DragEvent) {
       </div>
     </header>
 
-     <div class="custom-scrollbar grid auto-rows-min max-h-[80vh] gap-3 overflow-y-auto">
+    <div class="custom-scrollbar grid auto-rows-min max-h-[80vh] gap-3 overflow-y-auto">
       <ComponentCardItem
         v-for="card in cards"
         :key="card.id"
         :card="card"
+        @drag-start="emit('dragStart', $event)"
+        @drag-end="emit('dragEnd', $event)"
         @select="emit('selectCard', $event)"
       />
     </div>
